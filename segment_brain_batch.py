@@ -13,11 +13,10 @@ if __name__ == "__main__":
     # Verify each path is a directory
     for input_folder in input_batch:
         if not os.path.isdir(input_folder):
-            raise Exception(
-                input_folder + " is not a directory. Inputs must be a folder of files. Please refer to readme for more info")
+            raise Exception(input_folder + " is not a directory. Inputs must be a folder of files. Please refer to readme for more info")
 
     # Load the network
-    weights_path = base_path + "/data/model-weights/best_model.h5"
+    weights_path = base_path + "/data/model-weights/trailmap_model.hdf5"
 
     model = get_net()
     model.load_weights(weights_path)

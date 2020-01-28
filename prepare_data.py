@@ -26,7 +26,7 @@ if __name__ == "__main__":
         generate_data_set(data_original_path, data_set_path, nb_examples=nb_examples)
 
     # Generate data set by cropping out 64 length cubes from larger chunks for training
-    if sys.argv[1] == "generate_training_set":
+    elif sys.argv[1] == "generate_training_set":
 
         # Training directories
         data_original_path = base_path + "/data/training/training-original"

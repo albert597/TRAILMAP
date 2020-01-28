@@ -1,11 +1,13 @@
 
 # TRAILMAP - Extended Version
 
-This is a software package to extract axonal data from cleared brains as demonstrated in Friedmann D, Pun A, et al. While it was trained and tested on axons in iDISCO-cleared samples imaged by lightsheet microscopy, it works well at identifying many types of filamentous structures in 3D volumes. Instructions are included for segmenting your data with our best existing model, but we also provide guidance on transfer learning with your own annotated data.
+![Figure Image](https://www.biorxiv.org/content/biorxiv/early/2019/10/21/812644/F3.large.jpg?width=800&height=600&carousel=1)
+
+This is a software package to extract axonal data from cleared brains as demonstrated in [Mapping Mesoscale Axonal Projections in the Mouse Brain Using A 3D Convolutional Network](https://www.biorxiv.org/content/10.1101/812644v1.full) Friedmann D, Pun A, et al. While it was trained and tested on axons in iDISCO-cleared samples imaged by lightsheet microscopy, it works well at identifying many types of filamentous structures in 3D volumes. Instructions are included for segmenting your data with our best existing model, but we also provide guidance on transfer learning with your own annotated data.
 
 These instructions are written to be simple enough to be useful for novice users—not just of machine learning tools, but even if this is your first time using python or linux, you can hopefully follow along. If you prefer a less verbose set of instructions, there is also a shorter readme available.
 
-[Readme Short Version](../blob/master/README.md)
+[Readme Short Version](../master/README.md)
 
 ## Getting Started - Installation
 
@@ -16,7 +18,10 @@ These steps assume that you are starting with a fresh install of Ubuntu and are 
 ##### Hardware requirements:
 * While the network portion of TrailMap operates on your 3D volume in chunks and has minimal hardware requirements, visualizations benefit from having sufficient RAM to hold the whole sample volume at once. Depending on your brain file size, TrailMap will take 8-16GB of RAM. Opening a 16-bit volume covering a half-brain (as seen in the publication) requires ~24 GB. In practice, 64GB is sufficient, but 128GB+ provides greater flexibility when opening multiple volumes at once.
 
-* A Nvidia GPU with CUDA support. The network presented here was trained with a 1080Ti with 11GB GDDR5X Memory. Up to date drivers can be found with installation instructions at https://www.nvidia.com/Download/index.aspx
+* A Nvidia GPU with CUDA support. The network presented here was trained with a 1080Ti with 11GB GDDR5X Memory. 
+
+* You need to also install Nvidia Driver 390, CUDA 9.0, and CUDNN 7.0 for tensorflow to use your GPU. [Guide on installation for CUDA and CUDNN](https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-use-conda-instead-of-pip-52e5249374bc)
+
 
 ##### Software requirements:
 * Python 3.6
@@ -40,6 +45,11 @@ which will report back to you the version you have installed.
 Install ‘pip’ – a tool for installing python packages
 ```
 sudo apt install -y python3-pip
+```
+
+Install 'virtual environments' - a tool for creating isolated dependency environments
+```
+sudo apt install python3-venv
 ```
 
 ##### Making a ‘virtual environment’ for TrailMap so that you can manage its packages separate from the system’s packages:
@@ -68,10 +78,11 @@ and you will see (trailmap-env) appear on the left edge of the line to indicate 
 From within this environment, use ‘pip’ to install the following packages that are required for TrailMap to run:
 
 ```
-pip3 install tensorflow==1.9
-pip3 install opencv-python
-pip3 install pillow
-pip3 install numpy
+pip3 install tensorflow-gpu==1.9
+pip3 install opencv-python==4.1.2.30
+pip3 install pillow==7.0
+pip3 install numpy==1.16
+pip3 install h5py==2.1
 ```
 
 ##### TrailMap:
@@ -123,6 +134,8 @@ The program ‘segment_brain_batch.py’ will create a new folder named “seg-i
 ```
 python3 segment_brain_batch.py data/testing/example-chunk
 ```
+
+You should see a message saying "Adding visible gpu devices: 0" which would indicate tensorflow is using your gpu. If you do not see this message, please check your CUDA and CUDNN installations for your GPU. The segmentation program should take at most 1-2 minutes for the example-chunk.
 
 This output will be the same size as your input data, and corresponds to the probability that each voxel represents an axon (values from 0 to 1, in 32 bit format). Opening the folder as a ‘Virtual Stack’ in FIJI may be required if your volume is large and your computer does not have sufficient RAM.
 
@@ -194,7 +207,7 @@ python3 train.py
 
 Note: Depending on the amount of GPU memory, you may need to reduce the batch_size in the train.py file. You may also change steps_per_epoch = floor(NUM_TRAINING_EXAMPLES/batch_size) and validation_steps = floor(NUM_VALIDATION_EXAMPLES/batch_size)
 
-This will load in the current model and start training the model on your own data. Checkpoints are saved to data/model-weights at the end of each epoch along with tensorboard logs in data/tf-logs
+This will load in our current model and start training the model on your own data. Checkpoints are saved to data/model-weights at the end of each epoch along with tensorboard logs in data/tf-logs
 
 ##### Tensorboard – watching statistics evolve during training
 
@@ -207,6 +220,12 @@ tensorboard --logdir=/PATH_TO_TF-LOG-FILE
 Copy the link it outputs (eg. http://COMPUTER:####) and paste it into your web browser.
 
 If you are new to machine learning, some values to observe are ‘epoch_axon_recall’ and ‘epoch_val_loss’ which give you an idea of how well the network is finding axons at this moment in the training (recall) and whether or not it is overfitting to your data (if the val_loss is increasing while the recall is also increasing).
+
+You can try the following example, 
+
+```
+tensorboard --logdir='data/tf-logs/example-logs'
+```
 
 ##### Testing the performance of your new model
 

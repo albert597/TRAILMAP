@@ -1,11 +1,13 @@
 
 # TRAILMAP
 
-This is a software package to extract axonal data from cleared brains as demonstrated in Friedmann D, Pun A, et al. While it was trained and tested on axons in iDISCO-cleared samples imaged by lightsheet microscopy, it works well at identifying many types of filamentous structures in 3D volumes. Instructions are included for segmenting your data with our best existing model, but we also provide guidance on transfer learning with your own annotated data.
+![Figure Image](https://www.biorxiv.org/content/biorxiv/early/2019/10/21/812644/F3.large.jpg?width=800&height=600&carousel=1)
+
+This is a software package to extract axonal data from cleared brains as demonstrated in [Mapping Mesoscale Axonal Projections in the Mouse Brain Using A 3D Convolutional Network](https://www.biorxiv.org/content/10.1101/812644v1.full) Friedmann D, Pun A, et al. While it was trained and tested on axons in iDISCO-cleared samples imaged by lightsheet microscopy, it works well at identifying many types of filamentous structures in 3D volumes. Instructions are included for segmenting your data with our best existing model, but we also provide guidance on transfer learning with your own annotated data.
 
 There are two readmes—this one includes basic instructions and descriptions for getting TrailMap up and running. The second is written to be simple enough to be useful for novice users—not just of machine learning tools, but even if this is your first time using python or linux, you can hopefully follow along. 
 
-[Readme Extended Version](../blob/master/README-EXTENDED.md)
+[Readme Extended Version](../master/README-EXTENDED.md)
 
 ## Getting Started - Installation
 
@@ -22,15 +24,17 @@ or just download the repository directly from github.com
 ##### Hardware requirements:
 * While the network portion of TrailMap operates on your 3D volume in chunks, visualizations benefit from having sufficient RAM to hold the whole sample volume at once. Depending on your brain file size the program will take 8-16gb of memory.
 * A Nvidia GPU with CUDA support. The network presented here was trained with a 1080Ti with 11GB GDDR5X Memory. 
+* You need to also install Nvidia Driver 390, CUDA 9.0, and CUDNN 7.0 for tensorflow to use the GPU.  
 
 ##### Software requirements:
 * Python 3.6
 * You can use virtualenv or anaconda to manage dependencies; you can also install these packages with pip3
 ```
-pip3 install tensorflow==1.9
-pip3 install opencv-python
-pip3 install pillow
-pip3 install numpy
+pip3 install tensorflow-gpu==1.9
+pip3 install opencv-python==4.1.2.30
+pip3 install pillow==7.0
+pip3 install numpy==1.16
+pip3 install h5py==2.1
 ```
 
 ## Inference

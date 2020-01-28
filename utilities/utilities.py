@@ -132,7 +132,7 @@ def dist(p1, p2):
 Progress bar to indicate status of the segment_brain function
 """
 
-def draw_progress_bar(percent, eta, bar_len = 40):
+def draw_progress_bar(percent, eta="", bar_len = 40):
     # percent float from 0 to 1.
     sys.stdout.write("\r")
     sys.stdout.write("[{:<{}}] {:>3.0f}%       {:20}".format("=" * int(bar_len * percent), bar_len, percent * 100, eta))
