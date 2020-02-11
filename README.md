@@ -11,13 +11,13 @@ There are two readmes—this one includes basic instructions and descriptions fo
 
 ## Getting Started - Installation
 
-Download this repository with
+You must have git installed along with git-lfs
 
+To download the required files, run
 ```
+git lfs install
 git clone https://github.com/AlbertPun/TRAILMAP.git
 ```
-
-or just download the repository directly from github.com
 
 ### Prerequisites
 

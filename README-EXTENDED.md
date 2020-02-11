@@ -87,9 +87,18 @@ pip3 install h5py==2.1
 
 ##### TrailMap:
 
-Download the .zip file found at the green ‘Clone or Download’ button at https://github.com/AlbertPun/TRAILMAP.
+You must have git installed along with git-lfs
 
-Extract the compressed file to a location such as /home/USERNAME/Documents/TRAILMAP
+To install git and enable git-lfs, run the following commands
+```
+sudo apt install git
+git lfs install
+```
+
+To download the required files, run
+```
+git clone https://github.com/AlbertPun/TRAILMAP.git
+```
 
 From Terminal, enter into the TRAILMAP directory
 
