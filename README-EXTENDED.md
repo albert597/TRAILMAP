@@ -17,75 +17,59 @@ These steps assume that you are starting with a fresh install of Ubuntu and are 
 
 ##### Hardware requirements:
 * While the network portion of TrailMap operates on your 3D volume in chunks and has minimal hardware requirements, visualizations benefit from having sufficient RAM to hold the whole sample volume at once. Depending on your brain file size, TrailMap will take 8-16GB of RAM. Opening a 16-bit volume covering a half-brain (as seen in the publication) requires ~24 GB. In practice, 64GB is sufficient, but 128GB+ provides greater flexibility when opening multiple volumes at once.
-
 * A Nvidia GPU with CUDA support. The network presented here was trained with a 1080Ti with 11GB GDDR5X Memory. 
-
-* You need to also install Nvidia Driver 390, CUDA 9.0, and CUDNN 7.0 for tensorflow to use your GPU. [Guide on installation for CUDA and CUDNN](https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-use-conda-instead-of-pip-52e5249374bc)
+* You need to also install the  Nvidia Driver Verision > 418 with CUDA 10.1 and CUDNN 7.6 to use your GPU. [Guide on installation for CUDA and CUDNN](https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-use-conda-instead-of-pip-52e5249374bc)
 
 
 ##### Software requirements:
-* Python 3.6
 
-Many different opinions exist on the best way to install and manage python environments. If you’re new to this, the following steps will get the job done while being flexible for future changes.
-
-Current versions of Ubuntu ship with python included. Check this in a Terminal window with:
+* Python 3.7
 
 ```
-sudo apt update
-```
-confirm “yes” as needed by typing “y” and hitting "return"
-
-Check that everything is ok with:
-
-```
-python3 -V
-```
-which will report back to you the version you have installed.
-
-Install ‘pip’ – a tool for installing python packages
-```
-sudo apt install -y python3-pip
+tensorflow-gpu==2.1
+opencv==3.4
+pillow==7.0
+numpy==1.18
+h5py==2.1
 ```
 
-Install 'virtual environments' - a tool for creating isolated dependency environments
+We **highly** recommend you use Anaconda to manage your packages because it is by far the easiest way to install cuda and cudnn with the correct versions
+##### Installing Anaconda
+
+First download the newest 3.x version of Anaconda [here](https://www.anaconda.com/distribution/)
+
+To install Anaconda, run 
 ```
-sudo apt install python3-venv
+bash /home/USERNAME/Downloads/Anaconda3-2019.10-Linux-x86_64.sh
+```
+Answer yes for all prompts.
+
+##### Create Environment and Install Dependencies
+
+To create an environment with the proper dependencies, run 
+```
+conda create -n trailmap_env tensorflow-gpu=2.1 opencv=3.4.2 pillow=7.0.0
+```
+This will all install the correct version of cuda and cudnn so that tensorflow can use your gpu. 
+
+**Troubleshooting: If you receive the message below when you try to run scripts later, it is most likely that your nvidia driver version is < 418. Update your nvidia driver to fix this.**
+```
+Status: CUDA driver version is insufficient for CUDA runtime version"
 ```
 
-##### Making a ‘virtual environment’ for TrailMap so that you can manage its packages separate from the system’s packages:
-
-Create an empty folder somewhere safe named ‘environments’ (or any name you like)
-
-In ‘Terminal’, enter into this folder, eg. 
+To activate your new environment, run
 ```
-cd /home/USERNAME/Documents/environments
-```
-then, 
-```
-python3 -m venv trailmap-env
-```
-Check that the folder has been populated by new folders called “bin,” “include,” “lib,” etc.
-
-Any time you would like to use this environment, run
-
-```
-source home/USERNAME/Documents/environments/trailmap-env/bin/activate
-```
-and you will see (trailmap-env) appear on the left edge of the line to indicate that you are in the correct environment.
-
-
-##### Dependencies
-From within this environment, use ‘pip’ to install the following packages that are required for TrailMap to run:
-
-```
-pip3 install tensorflow-gpu==1.9
-pip3 install opencv-python==4.1.2.30
-pip3 install pillow==7.0
-pip3 install numpy==1.16
-pip3 install h5py==2.1
+conda activate trailmap_env
 ```
 
-##### TrailMap:
+You will see a (trailmap_env) text next to your terminal, which means you are in the trailmap_env environment. You must be in trailmap_env to run any scripts from this repository.
+
+To deactivate the environment, run
+```
+conda deactivate
+```
+
+##### TRAILMAP:
 
 You must have git installed along with git-lfs
 

@@ -1,5 +1,4 @@
 from inference import *
-import argparse
 from models import *
 import sys
 import os

@@ -1,10 +1,9 @@
 import tensorflow as tf
-from tensorflow.python.keras import backend as K
-from tensorflow.python.keras.engine import Input
-from tensorflow.python.keras.models import Model
-from tensorflow.python.keras.layers import Conv3D, MaxPooling3D, BatchNormalization, Conv3DTranspose, concatenate, \
-    Cropping3D
-from tensorflow.python.keras.optimizers import Adam
+from tensorflow.keras import backend as K
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Conv3D, MaxPooling3D, BatchNormalization, Conv3DTranspose, concatenate, \
+    Cropping3D, Input
+from tensorflow.keras.optimizers import Adam
 
 input_dim = 64
 output_dim = 36

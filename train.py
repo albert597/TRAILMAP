@@ -1,8 +1,7 @@
 from datetime import datetime
-from tensorflow.python.keras.callbacks import TensorBoard, ModelCheckpoint
-from tensorflow.python.keras import backend as K
+from tensorflow.keras.callbacks import TensorBoard, ModelCheckpoint
 from models.model import get_net
-import tensorflow
+import tensorflow as tf
 import os
 from training import load_data, VolumeDataGenerator
 
@@ -43,8 +42,8 @@ if __name__ == "__main__":
     best_weight_checkpoint = ModelCheckpoint(filepath=base_path + '/data/model-weights/best_weights_checkpoint.hdf5',
                                              verbose=1, save_best_only=True)
 
-    conf = tensorflow.ConfigProto(intra_op_parallelism_threads=32, inter_op_parallelism_threads=32)
-    K.set_session(tensorflow.Session(config=conf))
+    conf = tf.ConfigProto(intra_op_parallelism_threads=32, inter_op_parallelism_threads=32)
+    tf.set_session(tf.Session(config=conf))
 
     weights_path = base_path + "/data/model-weights/trailmap_model.hdf5"
 

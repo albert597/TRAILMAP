@@ -135,7 +135,7 @@ def segment_brain(input_folder, output_folder, model):
         time_per_section = (now_time - start_time)/(1 + section_index/output_dim)
 
         eta = "ETA: " + str(round(sections_left * time_per_section, 1)) + " mins"
-        draw_progress_bar(section_index / total_sections, eta)
+        draw_progress_bar((section_index + dim_offset) / total_sections, eta)
 
         section_index += output_dim
 
@@ -168,7 +168,7 @@ def write_tiff_stack(vol, fname):
 """
 Helper function for segment_brain. Takes in a section of the brain 
 
-*** Note: Due to the network output shape being smaller than the input shape, the edges will not be used by 
+*** Note: Due to the network output shape being smaller than the input shape, the edges will not be used  
 
 @param models: network models
 @param section: a section of the entire brain

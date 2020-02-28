@@ -22,19 +22,21 @@ git clone https://github.com/AlbertPun/TRAILMAP.git
 ### Prerequisites
 
 ##### Hardware requirements:
-* While the network portion of TrailMap operates on your 3D volume in chunks, visualizations benefit from having sufficient RAM to hold the whole sample volume at once. Depending on your brain file size the program will take 8-16gb of memory.
+* While the network portion of TrailMap operates on your 3D volume in chunks and has minimal hardware requirements, visualizations benefit from having sufficient RAM to hold the whole sample volume at once. Depending on your brain file size, TrailMap will take 8-16GB of RAM. Opening a 16-bit volume covering a half-brain (as seen in the publication) requires ~24 GB. In practice, 64GB is sufficient, but 128GB+ provides greater flexibility when opening multiple volumes at once.
 * A Nvidia GPU with CUDA support. The network presented here was trained with a 1080Ti with 11GB GDDR5X Memory. 
-* You need to also install Nvidia Driver 390, CUDA 9.0, and CUDNN 7.0 for tensorflow to use the GPU.  
+* You need to also install the  Nvidia Driver Verision > 418 with CUDA 10.1 and CUDNN 7.6 to use your GPU. [Guide on installation for CUDA and CUDNN](https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-use-conda-instead-of-pip-52e5249374bc)
 
 ##### Software requirements:
-* Python 3.6
-* You can use virtualenv or anaconda to manage dependencies; you can also install these packages with pip3
+* Python 3.7
+
+We **highly** recommend you use Anaconda to manage your packages because it is by far the easiest way to install cuda and cudnn with the correct versions. Refer to the [Readme Extended Version](../master/README-EXTENDED.md) for step by step instructions on how to do this with Anaconda
+
 ```
-pip3 install tensorflow-gpu==1.9
-pip3 install opencv-python==4.1.2.30
-pip3 install pillow==7.0
-pip3 install numpy==1.16
-pip3 install h5py==2.1
+tensorflow-gpu==2.1
+opencv==3.4
+pillow==7.0
+numpy==1.18
+h5py==2.1
 ```
 
 ## Inference

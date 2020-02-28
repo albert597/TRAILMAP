@@ -1,7 +1,8 @@
-from tensorflow.python.keras.utils import Sequence
+from tensorflow.keras.utils import Sequence
 import cv2
 import numpy as np
 import random
+
 
 class VolumeDataGenerator(Sequence):
     def __init__(self,
