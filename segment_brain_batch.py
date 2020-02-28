@@ -23,11 +23,15 @@ if __name__ == "__main__":
 
     for input_folder in input_batch:
 
+        # Remove trailing slashes
+        input_folder = os.path.normpath(input_folder)
+
         # Output folder name
         output_name = "seg-" + os.path.basename(input_folder)
         output_dir = os.path.dirname(input_folder)
 
         output_folder = os.path.join(output_dir, output_name)
+
 
         # Create output directory. Overwrite if the directory exists
         if os.path.exists(output_folder):
