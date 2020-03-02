@@ -18,7 +18,7 @@ These steps assume that you are starting with a fresh install of Ubuntu and are 
 ##### Hardware requirements:
 * While the network portion of TrailMap operates on your 3D volume in chunks and has minimal hardware requirements, visualizations benefit from having sufficient RAM to hold the whole sample volume at once. Depending on your brain file size, TrailMap will take 8-16GB of RAM. Opening a 16-bit volume covering a half-brain (as seen in the publication) requires ~24 GB. In practice, 64GB is sufficient, but 128GB+ provides greater flexibility when opening multiple volumes at once.
 * A Nvidia GPU with CUDA support. The network presented here was trained with a 1080Ti with 11GB GDDR5X Memory. 
-* You need to also install the  Nvidia Driver Verision > 418 with CUDA 10.1 and CUDNN 7.6 to use your GPU. [Guide on installation for CUDA and CUDNN](https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-use-conda-instead-of-pip-52e5249374bc)
+* You need to also install the  Nvidia Driver Verision > 418 with CUDA 10.1 and CUDNN 7.6 to use your GPU. This will be specific to your system and GPU choice-- we provide some guidance below, but there are also online resources available to help: Guide on installation for CUDA and CUDNN (https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-use-conda-instead-of-pip-52e5249374bc)
 
 
 ##### Software requirements:
@@ -34,6 +34,35 @@ h5py==2.1
 ```
 
 We **highly** recommend you use Anaconda to manage your packages because it is by far the easiest way to install cuda and cudnn with the correct versions
+##### Installing NVIDIA drivers
+
+Identify the current drivers available for your GPU by running 
+```
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo ubuntu-drivers devices
+```
+
+This will show the list of available drivers for your GPU, including which is recommended. Installing this recommendation can be done by running
+
+```
+sudo ubuntu-drivers autoinstall
+```
+
+If you prefer to choose your specific driver version or have issues with the newest version, instead choose your version number from the list (replacing ### below) and run
+```
+sudo apt install nvidia-driver-###
+```
+Restart your machine with
+
+```
+sudo shutdown -r now
+```
+
+Check your current driver version with
+```
+nvidia-smi
+```
+
 ##### Installing Anaconda
 
 First download the newest 3.x version of Anaconda [here](https://www.anaconda.com/distribution/)
@@ -42,7 +71,7 @@ To install Anaconda, run
 ```
 bash /home/USERNAME/Downloads/Anaconda3-2019.10-Linux-x86_64.sh
 ```
-Answer yes for all prompts.
+Answer yes for all prompts. After finishing, close the Terminal window and open a new one to continue.
 
 ##### Create Environment and Install Dependencies
 
@@ -52,7 +81,7 @@ conda create -n trailmap_env tensorflow-gpu=2.1 opencv=3.4.2 pillow=7.0.0
 ```
 This will all install the correct version of cuda and cudnn so that tensorflow can use your gpu. 
 
-**Troubleshooting: If you receive the message below when you try to run scripts later, it is most likely that your nvidia driver version is < 418. Update your nvidia driver to fix this.**
+*Troubleshooting: If you receive the message below when you try to run scripts later, it is most likely that your nvidia driver version is < 418. Update your nvidia driver to fix this.*
 ```
 Status: CUDA driver version is insufficient for CUDA runtime version"
 ```
@@ -64,7 +93,18 @@ conda activate trailmap_env
 
 You will see a (trailmap_env) text next to your terminal, which means you are in the trailmap_env environment. You must be in trailmap_env to run any scripts from this repository.
 
-To deactivate the environment, run
+From in this environment, to check the tensorflow can see the GPU, start python3
+```
+python3
+```
+
+```python
+import tensorflow.compat.v1 as tf
+sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+```
+
+You should first see info regarding your CPU followed by information for your GPU. If tensorflow can’t see the GPU, you will only see the first part. Exit python with ctl-D
+After completing the install, anytime you wish to deactivate the environment, run
 ```
 conda deactivate
 ```
@@ -73,10 +113,9 @@ conda deactivate
 
 You must have git installed along with git-lfs
 
-To install git and enable git-lfs, run the following commands
+To install git, run the following 
 ```
 sudo apt install git
-git lfs install
 ```
 
 To download the required files, run
@@ -90,19 +129,25 @@ From Terminal, enter into the TRAILMAP directory
 cd /home/USERNAME/Documents/TRAILMAP
 ```
 
-and you should see:
+Due to the large size of the model, you must enable git-lfs in this directory by running
+```
+git lfs install
+```
+
+You should see:
 
 ```
-(trailmap-env) USERNAME@computername:~/home/USERNAME/Documents/TRAILMAP$
+(trailmap_env) USERNAME@computername:~/home/USERNAME/Documents/TRAILMAP$
 ```
 
 This is how it should look each time you would like to use TrailMap. Once installed, each time you start from a fresh Terminal window, you just need to run the following two commands to get back to this point:
 
 ```
-source home/USERNAME/Documents/environments/tensorflow-env/bin/activate
+conda activate trailmap_env
 cd /home/USERNAME/Documents/TRAILMAP
 ```
 
+If git-lfs does not work for you (e.g. error messages with the model being corrupted), we have also provided a google drive link to the model weights [here](https://drive.google.com/file/d/1-G-hhH0F0SjzVDDtEsWtVFA-UCpCVE3m/view?usp=sharing). Drag the downloaded file into the TRAILMAP/data/model-weights folder.
 
 ## Inference - Using our model to segment your data
 

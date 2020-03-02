@@ -15,9 +15,21 @@ You must have git installed along with git-lfs
 
 To download the required files, run
 ```
-git lfs install
 git clone https://github.com/AlbertPun/TRAILMAP.git
 ```
+
+From Terminal, enter into the TRAILMAP directory
+
+```
+cd /home/USERNAME/Documents/TRAILMAP
+```
+
+Due to the large size of the model, you must enable git-lfs in this directory by running
+```
+git lfs install
+```
+
+If git-lfs does not work for you (e.g. error messages with the model being corrupted), we have also provided a google drive link to the model weights [here](https://drive.google.com/file/d/1-G-hhH0F0SjzVDDtEsWtVFA-UCpCVE3m/view?usp=sharing). Drag the downloaded file into the TRAILMAP/data/model-weights folder.
 
 ### Prerequisites
 
@@ -80,7 +92,7 @@ TrailMap will determine a volume's matching label by sorting files in the ‘vol
 
 We have included a script to add the edge label next to an axon label. After you have labeled axons in your volumes, run
 ```
-ython3 prepare_data.py "process_labels" PATH_TO_LABEL_FOLDER
+python3 prepare_data.py "process_labels" PATH_TO_LABEL_FOLDER
 ```
 
 where PATH_TO_LABEL_FOLDER is the folder containing all your labeled tiff volumes. This will create a folder edge-ORIGINAL_FOLDER_NAME with the new edge label added to each labeled volume.
