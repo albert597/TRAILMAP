@@ -42,15 +42,12 @@ if __name__ == "__main__":
     best_weight_checkpoint = ModelCheckpoint(filepath=base_path + '/data/model-weights/best_weights_checkpoint.hdf5',
                                              verbose=1, save_best_only=True)
 
-    conf = tf.ConfigProto(intra_op_parallelism_threads=32, inter_op_parallelism_threads=32)
-    tf.set_session(tf.Session(config=conf))
-
     weights_path = base_path + "/data/model-weights/trailmap_model.hdf5"
 
     model = get_net()
     # This will do transfer learning and start the model off with our current best model.
     # Remove the model.load_weight line below if you want to train from scratch
-    # model.load_weights(weights_path)
+    model.load_weights(weights_path)
 
     model.fit_generator(train_generator,
                         steps_per_epoch=120,
