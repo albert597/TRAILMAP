@@ -247,6 +247,8 @@ Note: Depending on the amount of GPU memory, you may need to reduce the batch_si
 
 This will load in our current model and start training the model on your own data. Checkpoints are saved to data/model-weights at the end of each epoch along with tensorboard logs in data/tf-logs
 
+Original training data can be found [here](https://drive.google.com/drive/folders/1L-surdM_YvAawLqn2cMIYTNRCqBrygu4?usp=sharing)
+
 ##### Tensorboard – watching statistics evolve during training
 
 In a new Terminal window, activate the same python environment and run:
