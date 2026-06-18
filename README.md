@@ -29,7 +29,7 @@ Due to the large size of the model, you must enable git-lfs in this directory by
 git lfs install
 ```
 
-If git-lfs does not work for you (e.g. error messages with the model being corrupted), we have also provided a google drive link to the model weights [here](https://drive.google.com/file/d/1-G-hhH0F0SjzVDDtEsWtVFA-UCpCVE3m/view?usp=sharing). Drag the downloaded file into the TRAILMAP/data/model-weights folder.
+If git-lfs does not work for you (e.g. error messages with the model being corrupted), we have also provided a google drive link to the model weights [here](https://huggingface.co/dfriedma/trailmap). Drag the downloaded file into the TRAILMAP/data/model-weights folder.
 
 ### Prerequisites
 
